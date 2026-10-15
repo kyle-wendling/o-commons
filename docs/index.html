@@ -3,87 +3,380 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The O Commons — Design Explorations</title>
+<title>The O Commons — Immigrant Artists Mutual Aid</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F5F3EC;
-  --ink:#1B1B18;
-  --grey:#6B6A63;
-  --red:#A83226;
-  --black:#141414;
+  --red:#8C1A2B;
+  --red-bright:#E25563;
+  --ink:#141414;
+  --paper:#F5F2EC;
+  --grey:#8D8A84;
   --sans:'Space Grotesk',sans-serif;
+  --disp:'Archivo',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);min-height:100vh}
-.wrap{max-width:1080px;margin:0 auto;padding:56px 28px 72px}
-.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
-h1{font-weight:700;font-size:clamp(34px,5vw,58px);letter-spacing:-.02em;line-height:1.02;margin-bottom:14px}
-.lede{color:var(--grey);font-size:17px;max-width:60ch;line-height:1.6;margin-bottom:52px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-@media(max-width:860px){.grid{grid-template-columns:1fr}}
-a.card{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);border:1.5px solid var(--ink);background:#fff;transition:transform .25s,box-shadow .25s}
-a.card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--ink)}
-.thumb{height:150px;border-bottom:1.5px solid var(--ink);position:relative;overflow:hidden}
-.v1{background:linear-gradient(180deg,#8a7f68 0%,#E9E3D2 78%,#F2EEE3 100%)}
-.v2{background:linear-gradient(180deg,#5a1712 0%,#B3150E 45%,#141414 100%)}
-.v3{background:linear-gradient(180deg,#8f8f8f 0%,#3a3a3a 55%,#FAF9F6 100%)}
-.thumb .o{position:absolute;left:18px;top:14px;color:#fff;font-weight:700;font-size:30px;opacity:.9}
-.v2 .o{color:#fff}
-.thumb .bar{position:absolute;bottom:14px;left:18px;right:18px;height:8px}
-.v1 .bar{background:var(--red);width:55%}
-.v2 .bar{background:#fff}
-.v3 .bar{background:var(--ink);width:40%}
-.body{padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
-.body .no{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:500}
-.body h2{font-weight:700;font-size:23px;letter-spacing:-.01em}
-.body p{color:var(--grey);font-size:14.5px;line-height:1.55;flex:1}
-.body .go{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;border-bottom:1.5px solid var(--ink);align-self:flex-start;padding-bottom:2px;transition:color .2s,border-color .2s}
-a.card:hover .go{color:var(--red);border-color:var(--red)}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid #D6D2C4;font-size:12.5px;color:var(--grey);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;letter-spacing:.03em}
-.foot a{color:var(--ink)}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:17px;line-height:1.6}
+::selection{background:var(--red);color:#fff}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.reveal.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* ribbon */
+.ribbon{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 28px;background:var(--red);color:#fff;transition:padding .3s}
+.ribbon.min{padding:8px 28px;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+.ribbon .logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff}
+.logo .o{width:44px;height:44px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-weight:800;font-size:20px;flex-shrink:0;transition:width .3s,height .3s}
+.ribbon.min .logo .o{width:34px;height:34px;font-size:16px}
+.logo .t{font-family:var(--disp);font-weight:800;font-size:18px;letter-spacing:.01em;text-transform:uppercase;line-height:1.15;max-width:22ch}
+.logo .t small{display:block;font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.ribbon nav{display:flex;gap:28px;flex-wrap:wrap}
+.ribbon nav a{color:#fff;text-decoration:none;font-family:var(--disp);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.1em;position:relative;padding:4px 0}
+.ribbon nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:#fff;transform:scaleX(0);transform-origin:right;transition:transform .3s}
+.ribbon nav a:hover::after{transform:scaleX(1);transform-origin:left}
+@media(max-width:900px){.ribbon nav{display:none}}
+
+/* hero */
+.hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden}
+.hero .bg-wrap{position:absolute;inset:0}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:50% 10%;filter:grayscale(35%) contrast(1.05) brightness(.92)}
+.hero .redwash{position:absolute;inset:0;background:linear-gradient(180deg,rgba(140,26,43,.34),rgba(20,20,20,.15) 40%,rgba(20,20,20,.88) 100%);mix-blend-mode:multiply}
+.hero .inkfade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.35) 0%,transparent 30%,transparent 55%,rgba(20,20,20,.92) 100%)}
+.hero .content{position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto;padding:0 28px 64px}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,9vw,128px);line-height:.92;text-transform:uppercase;letter-spacing:-.015em;color:#fff}
+.hero h1 .stroke{color:transparent;-webkit-text-stroke:2px #fff;display:inline-block}
+.hero h1 .red{color:var(--red-bright)}
+.hero .tagline{margin-top:22px;font-size:clamp(16px,2vw,21px);color:#EDEAE2;max-width:56ch}
+.hero .tagline .sub{display:block;margin-top:10px;color:#D8D5CD}
+.scroll-cue{position:absolute;right:28px;bottom:28px;z-index:2;font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#fff;writing-mode:vertical-rl;opacity:.8;animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){.scroll-cue{animation:none}}
+
+/* marquee */
+.marquee{background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;border-top:2px solid #fff;border-bottom:2px solid #fff;padding:12px 0;position:relative;z-index:3}
+.marquee .track{display:inline-block;animation:mq 26s linear infinite}
+.marquee span{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase;margin:0 26px}
+.marquee span.star{color:var(--red-bright)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee .track{animation:none}}
+
+/* generic section */
+section.block{background:var(--ink);border-top:1px solid #2C2C2A}
+.sec-head{max-width:1240px;margin:0 auto;padding:72px 28px 34px;display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.sec-head h2{font-family:var(--disp);font-weight:800;font-size:clamp(38px,5.5vw,72px);line-height:.95;text-transform:uppercase;letter-spacing:-.01em}
+.sec-head .idx{font-family:var(--disp);font-weight:600;color:var(--red-bright);font-size:14px;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap}
+.sec-head h2 .thin{color:var(--grey);font-weight:400;font-style:italic;font-family:var(--sans);text-transform:none;font-size:.5em;letter-spacing:0}
+
+/* about */
+.about{max-width:1240px;margin:0 auto;padding:0 28px 80px;display:grid;grid-template-columns:1fr;gap:26px}
+.about p{max-width:84ch}
+.about .big{font-size:clamp(18px,1.7vw,21px);line-height:1.62;font-weight:400}
+.about .big b{color:var(--red-bright);font-weight:500}
+.about .side p{color:#B9B6AE;font-size:16.5px;margin-bottom:20px}
+.about .side .pull{border-left:3px solid var(--red-bright);padding-left:18px;color:#EDEAE2;font-size:18px;margin-bottom:0}
+.aud{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1240px;margin:0 auto;padding:0 28px 80px}
+@media(max-width:760px){.aud{grid-template-columns:1fr}}
+.aud .cell{background:#1D1D1B;padding:30px 26px;border:1px solid #2C2C2A}
+.aud .cell .n{font-family:var(--disp);font-weight:800;color:var(--red-bright);font-size:15px;margin-bottom:14px}
+.aud .cell h3{font-family:var(--disp);font-weight:700;font-size:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.02em}
+.aud .cell p{color:#B9B6AE;font-size:15px}
+
+/* events */
+.event-card{max-width:1240px;margin:0 auto;padding:0 28px 80px}
+.event-card .card{border:2px solid var(--paper);display:grid;grid-template-columns:220px 1fr;transition:background .3s,border-color .3s}
+.event-card .card:hover{border-color:var(--red)}
+.event-card .when{background:var(--red);color:#fff;padding:34px 26px;display:flex;flex-direction:column;justify-content:center}
+.event-card .when .d{font-family:var(--disp);font-weight:800;font-size:64px;line-height:1}
+.event-card .when .m{font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.16em;text-transform:uppercase}
+.event-card .when .t{margin-top:8px;font-size:14px;opacity:.9}
+.event-card .info{padding:34px 32px}
+.event-card h3{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3vw,34px);text-transform:uppercase;line-height:1.05;margin-bottom:10px}
+.event-card .venue{font-size:14px;letter-spacing:.04em;color:#B9B6AE;margin-bottom:16px}
+.event-card p{color:#D8D5CD;margin-bottom:14px;font-size:16px}
+.event-card .bring{color:var(--red-bright);font-weight:500}
+.event-card .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}
+.event-card .links a{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:#fff;background:var(--red);border:2px solid var(--red);padding:12px 22px;transition:background .25s,color .25s}
+.event-card .links a:hover{background:transparent;color:var(--red-bright)}
+@media(max-width:760px){.event-card .card{grid-template-columns:1fr}}
+
+/* network */
+.net{max-width:1240px;margin:0 auto;padding:0 28px 80px}
+.net .rows{border-top:1px solid #2C2C2A}
+.net .row{display:grid;grid-template-columns:80px 1fr 2fr auto;gap:28px;align-items:center;padding:34px 0;border-bottom:1px solid #2C2C2A;transition:padding-left .3s,background .3s;position:relative}
+.net .row:hover{padding-left:20px;background:#181816}
+.net .row .no{font-family:var(--disp);font-weight:800;font-size:26px;color:var(--red-bright)}
+.net .row h3{font-family:var(--disp);font-weight:700;font-size:clamp(22px,3vw,32px);text-transform:uppercase;line-height:1}
+.net .row p{color:#B9B6AE;font-size:15.5px}
+.net .row .arrow{font-family:var(--disp);font-size:26px;color:var(--paper);transition:transform .3s,color .3s}
+.net .row:hover .arrow{transform:translateX(8px);color:var(--red-bright)}
+@media(max-width:820px){.net .row{grid-template-columns:1fr;gap:10px}.net .row .arrow{display:none}}
+
+/* artworks */
+.art{max-width:1240px;margin:0 auto;padding:0 28px 90px}
+.art .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+@media(max-width:900px){.art .grid{grid-template-columns:1fr}}
+.art .piece{position:relative;background:#1D1D1B;padding:36px 30px;min-height:230px;display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;transition:transform .3s}
+.art .piece::before{content:"";position:absolute;inset:0;background:var(--red);transform:translateY(101%);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.art .piece:hover::before{transform:translateY(0)}
+.art .piece>*{position:relative;z-index:1}
+.art .piece:hover h3,.art .piece:hover .a,.art .piece:hover p,.art .piece:hover .tag{color:#fff}
+.art .piece .tag{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--red-bright);margin-bottom:12px;transition:color .3s}
+.art .piece h3{font-family:var(--disp);font-weight:800;font-size:26px;text-transform:uppercase;margin-bottom:6px;transition:color .3s}
+.art .piece .a{font-size:13px;color:#8D8A84;margin-bottom:12px;transition:color .3s}
+.art .piece p{color:#B9B6AE;font-size:15px;transition:color .3s}
+
+/* submit */
+.submit{background:var(--red);color:#fff;border-top:2px solid #fff}
+.submit .sec-head h2{color:#fff;font-size:clamp(30px,4.4vw,58px)}
+.submit .idx{color:#FFE8E6;font-size:11px}
+.sub-grid{max-width:1240px;margin:0 auto;padding:0 28px 90px;display:grid;grid-template-columns:1fr 1.2fr;gap:60px}
+@media(max-width:880px){.sub-grid{grid-template-columns:1fr;gap:34px}}
+.sub-grid .pitch h3{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3vw,34px);text-transform:uppercase;line-height:1.1;margin-bottom:16px}
+.sub-grid .pitch p{font-size:16.5px;line-height:1.65;color:#FFE8E6}
+.faq{border-top:2px solid #141414}
+.faq details{border-bottom:2px solid #141414}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 2px;font-family:var(--disp);font-weight:700;font-size:16.5px;text-transform:uppercase;letter-spacing:.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{font-size:22px;transition:transform .25s}
+.faq details[open] summary .pm{transform:rotate(45deg)}
+.faq .a{padding:0 2px 20px;font-size:15.5px;line-height:1.6;color:#FFE8E6}
+.sub-form{display:grid;grid-template-columns:max-content 1fr;gap:26px 22px;margin-top:30px;align-items:end}
+.sub-form label{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#141414;padding-bottom:12px;white-space:nowrap}
+.sub-form input,.sub-form select,.sub-form textarea{background:transparent;border:none;border-bottom:2px solid #141414;color:#fff;font-family:var(--sans);font-size:17px;padding:10px 2px;outline:none;border-radius:0;width:100%}
+.sub-form textarea{min-height:100px;resize:vertical}
+.sub-form input::placeholder,.sub-form textarea::placeholder{color:rgba(255,255,255,.55)}
+.sub-form select option{color:#141414}
+.sub-form button{grid-column:2;justify-self:start;background:#141414;color:#fff;border:2px solid #141414;font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;padding:16px 34px;cursor:pointer;transition:background .25s,color .25s}
+@media(max-width:560px){.sub-form{grid-template-columns:1fr;gap:8px}.sub-form label{padding-bottom:0}.sub-form button{grid-column:1;margin-top:14px}}
+.sub-form button:hover{background:transparent;color:#141414}
+
+/* footer */
+footer{padding:64px 28px 36px;max-width:1240px;margin:0 auto}
+.f-top{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;flex-wrap:wrap;margin-bottom:48px}
+.f-top .mark{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5vw,60px);text-transform:uppercase;line-height:.95;letter-spacing:-.01em}
+.f-top .mark span{color:var(--red-bright)}
+.impressum{border-top:1px solid #2C2C2A;padding-top:18px;font-size:12px;letter-spacing:.05em;color:#8D8A84;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.impressum .imgcredit{color:#B9B6AE}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="kicker">The O Commons — Immigrant Artists Mutual Aid</div>
-  <h1>Three design directions.</h1>
-  <p class="lede">Same content, same structure — three different visual voices for the O‑1 mutual aid network, so we can home in on one. All use the “Inhale/Exhale” performance photo (Rita Kuleva, photo: Aniko Szucs) as the hero, treated differently in each.</p>
-  <div class="grid">
-    <a class="card" href="version-1-archival/index.html">
-      <div class="thumb v1"><span class="o">O</span><span class="bar"></span></div>
-      <div class="body">
-        <span class="no">Version 01</span>
-        <h2>The Archive</h2>
-        <p>Warm archival-document feel: aged paper, mono labels, rubber-stamp red, Fraunces serif. The photo dissolves into the page; animated “Fig. 1” bar chart. Quiet, literary, zine-like.</p>
-        <span class="go">Open version 1 →</span>
-      </div>
-    </a>
-    <a class="card" href="version-2-red-ribbon/index.html">
-      <div class="thumb v2"><span class="o">O</span><span class="bar"></span></div>
-      <div class="body">
-        <span class="no">Version 02</span>
-        <h2>The Red Ribbon</h2>
-        <p>Dark, loud activist-poster energy: red fixed ribbon nav, condensed extra-bold caps, marquee ticker, red duotone hero, red-fill hover tiles. Solidarity as visual volume.</p>
-        <span class="go">Open version 2</span>
-      </div>
-    </a>
-    <a class="card" href="version-3-editorial-bauhaus/index.html">
-      <div class="thumb v3"><span class="o">O</span><span class="bar"></span></div>
-      <div class="body">
-        <span class="no">Version 03</span>
-        <h2>The Editorial</h2>
-        <p>Swiss-grid refinement: white gallery background, numbered sections, Space Grotesk headlines, grayscale 100vh hero with slow Ken Burns. Clean, institutional, refined.</p>
-        <span class="go">Open version 3</span>
-      </div>
-    </a>
+
+<div class="ribbon" id="ribbon">
+  <a class="logo" href="#top">
+    <span class="o">O</span>
+    <span class="t">The O Commons<small>Immigrant Artists Mutual Aid</small></span>
+  </a>
+  <nav>
+    <a href="#about">About Us</a>
+    <a href="#events">Events</a>
+    <a href="#network">Network</a>
+    <a href="#artworks">Artworks</a>
+    <a href="#submit">Submit Your Questions</a>
+  </nav>
+</div>
+
+<section class="hero" id="top">
+  <div class="bg-wrap">
+    <img src="hero.jpg" alt="Performance “Inhale/Exhale” by Rita Kuleva">
+    <div class="redwash"></div>
+    <div class="inkfade"></div>
   </div>
-  <div class="foot">
-    <span>Each version: single HTML file, same five tabs, demo forms. Details in <a href="../summary.md">summary.md</a>.</span>
-    <span>© 2026 The O Commons</span>
+  <div class="content">
+    <h1>Artists<br>on <span class="stroke">Paper</span><br><span class="red">Helping</span> Artists.</h1>
+    <p class="tagline">A mutual aid network for immigrant artists and artists-scholars on O‑1 visas.<span class="sub">Peer knowledge, shared resources, creative solidarity — because the visa system shouldn't be navigated alone.</span></p>
+  </div>
+  <div class="scroll-cue">Scroll ↓</div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Mutual Aid</span><span class="star">✳</span><span>O‑1 Visa</span><span class="star">✳</span><span>Peer Knowledge</span><span class="star">✳</span><span>Resource Hub</span><span class="star">✳</span><span>Immigrant Artists</span><span class="star">✳</span><span>Artist-Scholars</span><span class="star">✳</span><span>Scholars</span><span class="star">✳</span><span>New York City</span><span class="star">✳</span>
+    <span>Mutual Aid</span><span class="star">✳</span><span>O‑1 Visa</span><span class="star">✳</span><span>Peer Knowledge</span><span class="star">✳</span><span>Resource Hub</span><span class="star">✳</span><span>Immigrant Artists</span><span class="star">✳</span><span>Artist-Scholars</span><span class="star">✳</span><span>Scholars</span><span class="star">✳</span><span>New York City</span><span class="star">✳</span>
   </div>
 </div>
+
+<section class="block" id="about">
+  <div class="sec-head reveal">
+    <h2>About Us</h2>
+    <span class="idx">01 — Who we are</span>
+  </div>
+  <div class="about">
+    <p class="big reveal"><b>The O Commons: Immigrant Artists Mutual Aid</b> is a community-driven initiative that responds to the <b>growing precarity</b> of working as an artist or scholar on an O‑1 visa, one of the main U.S. work visas for individuals with extraordinary ability in the arts. In today's <b>gig-based cultural economy</b>, many artists rely on multiple jobs, freelance work, and institutional affiliations to make a living. O‑1 visa holders, however, are often restricted to a narrow range of authorized employment. As fewer cultural institutions are willing or able to sponsor O‑1 visa holders and as the cost and complexity of maintaining legal status continue to rise, immigrant artists increasingly find themselves excluded from employment opportunities, forced to navigate an opaque immigration system, and left without <b>access to the practical knowledge and a support system</b> that is needed to sustain their careers.</p>
+    <div class="side reveal">
+      <p>Immigration attorneys provide essential legal expertise. However, <b>much of the legal process depends on practical knowledge that is rarely shared publicly</b>: timelines, recommendation letters, supportive institutions, and the experiences of artists and scholars who successfully obtained their O visas.</p>
+      <p class="pull"><b>The O Commons fills this gap with peer-to-peer mutual aid and shared digital resources.</b></p>
+    </div>
+  </div>
+  <div class="aud">
+    <div class="cell reveal">
+      <div class="n">01</div>
+      <h3>The Renewers</h3>
+      <p>Artists who built their lives and careers in the United States and must repeatedly renew their immigration status.</p>
+    </div>
+    <div class="cell reveal">
+      <div class="n">02</div>
+      <h3>The Graduates</h3>
+      <p>International students who wish to remain in the artistic communities they developed during their studies.</p>
+    </div>
+    <div class="cell reveal">
+      <div class="n">03</div>
+      <h3>The Newcomers</h3>
+      <p>Artists invited to work in the U.S. who need legal authorization before their professional engagements can begin.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="events">
+  <div class="sec-head reveal">
+    <h2>Events</h2>
+    <span class="idx">02 — Gatherings</span>
+  </div>
+  <div class="event-card reveal">
+    <div class="card">
+      <div class="when">
+        <div class="d">23</div>
+        <div class="m">October</div>
+        <div class="t">4:00–6:00 PM</div>
+      </div>
+      <div class="info">
+        <h3>The O Commons — Launch Event</h3>
+        <div class="venue">The People's Forum · Josina Muthemba Machel Classroom · 320 W 37th Street, New York, NY 10018</div>
+        <p>A gathering for immigrant artists, cultural workers, students, and allies. We share stories and immigration resources, exchange practical knowledge, and connect with each other — then create short artistic responses to documents, objects, and memories from our immigration journeys.</p>
+        <p class="bring">Bring a document, object, or memory from your immigration journey if you'd like to share it as a monologue, performance, visual artwork, installation concept, or another form.</p>
+        <div class="links">
+          <a href="https://www.eventbrite.com/e/the-o-commons-immigrant-artists-mutual-aid-tickets-2000485054650?aff=erelpanelorg" target="_blank" rel="noopener">Join in person</a>
+          <a href="https://www.eventbrite.com/e/the-o-commons-immigrant-artists-mutual-aid-virtual-tickets-2003370221261" target="_blank" rel="noopener">Join online</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="network">
+  <div class="sec-head reveal">
+    <h2>Network</h2>
+    <span class="idx">03 — What we're building</span>
+  </div>
+  <div class="net reveal">
+    <div class="rows">
+      <a class="row" href="#submit" style="text-decoration:none;color:inherit">
+        <span class="no">01</span>
+        <h3>Mutual Aid Network</h3>
+        <p>Mentors who completed the O‑1 or EB process guide artists and scholars currently navigating it — experience-based, responsible, never a substitute for legal counsel. However, some artists and scholars have successfully petitioned their own cases. You can also connect with them here.</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="row" href="#submit" style="text-decoration:none;color:inherit">
+        <span class="no">02</span>
+        <h3>Resource Hub</h3>
+        <p>Recommended attorneys, sponsoring institutions, anonymized petition letters, timelines, costs, RFE strategies — community-generated and public.</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="row" href="#artworks" style="text-decoration:none;color:inherit">
+        <span class="no">03</span>
+        <h3>Curatorial Repository</h3>
+        <p>Connect with artists whose work explores migration and immigration or draws on their own immigrant experiences.</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="artworks">
+  <div class="sec-head reveal">
+    <h2>Artworks</h2>
+    <span class="idx">04 — Archive of Artworks</span>
+  </div>
+  <div class="art reveal">
+    <div class="grid">
+      <div class="piece">
+        <div class="tag">01</div>
+        <h3>Archive of Artworks</h3>
+        <p>Archive of literary, performance, dance, or visual artworks that explore migration and immigration.</p>
+      </div>
+      <div class="piece">
+        <div class="tag">02</div>
+        <h3>Immigration Memorabilia</h3>
+        <p>Objects that people carry through an immigration journey, gathered at our live events.</p>
+      </div>
+      <div class="piece">
+        <div class="tag">03</div>
+        <h3>Open Call</h3>
+        <div class="a">Document-based responses to migration</div>
+        <p>Submit artwork created from or inspired by the bureaucratic paper trail of migration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="submit" id="submit">
+  <div class="sec-head reveal">
+    <h2>Submit Your Questions</h2>
+    <span class="idx">05 — Ask anything</span>
+  </div>
+  <div class="sub-grid reveal">
+    <div class="pitch">
+      <h3>No question is too small. No situation too specific.</h3>
+      <p>Ask about petitions, timelines, sponsors, attorneys, RFEs, or daily life on an O‑1. Anonymized questions and answers become part of the public Resource Hub — so the next artist starts further ahead than you did.</p>
+      <div class="faq">
+        <details>
+          <summary>Is this legal advice? <span class="pm">+</span></summary>
+          <div class="a">No. Everything shared is experience-based peer knowledge, clearly distinguished from legal counsel. Mentors are oriented to keep it that way — it helps you ask better questions and prepare stronger consultations with attorneys.</div>
+        </details>
+        <details>
+          <summary>Who can submit a question? <span class="pm">+</span></summary>
+          <div class="a">Immigrant artists, cultural workers, international students, and allies — at any stage of the O‑1, EB, or student-to-visa path.</div>
+        </details>
+        <details>
+          <summary>Will my question be public? <span class="pm">+</span></summary>
+          <div class="a">Only if you choose. Selected questions are anonymized and added to the Resource Hub so answers can help the whole community.</div>
+        </details>
+      </div>
+    </div>
+    <form class="sub-form" onsubmit="event.preventDefault();this.querySelector('button').textContent='Received — thank you.';this.querySelector('button').disabled=true;">
+      <label for="v2-name">Name or Alias:</label>
+      <input id="v2-name" type="text" autocomplete="name">
+      <label for="v2-email">Email:</label>
+      <input id="v2-email" type="email" autocomplete="email">
+      <label for="v2-topic">Topic:</label>
+      <select id="v2-topic">
+        <option>O‑1 petitions &amp; renewals</option>
+        <option>EB / green card path</option>
+        <option>Finding sponsors &amp; institutions</option>
+        <option>Attorneys &amp; costs</option>
+        <option>RFEs &amp; timelines</option>
+        <option>Something else</option>
+      </select>
+      <label for="v2-body">Your Question:</label>
+      <textarea id="v2-body" placeholder="Type it here — no wrong questions."></textarea>
+      <button type="submit">Send question</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="f-top">
+    <div class="mark">The O<br><span>Commons</span></div>
+    <div class="impressum" style="border:none;padding:0;flex-direction:column;align-items:flex-end;text-align:right">
+      <span>Gilder/Coigney International Forum · New Perspectives Theatre (TBC) · A CUNY Social Practice Fellowship Project</span>
+      <span class="imgcredit">Landing image: performance “Inhale/Exhale” by Rita Kuleva. Photo: Aniko Szucs.</span>
+      <span>© 2026 The O Commons</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// shrink ribbon on scroll
+const ribbon=document.getElementById('ribbon');
+addEventListener('scroll',()=>ribbon.classList.toggle('min',scrollY>80),{passive:true});
+
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>

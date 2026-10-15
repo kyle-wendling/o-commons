@@ -1,14 +1,65 @@
-# The O Commons — 3 Design Explorations
+# The O Commons — Immigrant Artists Mutual Aid
 
-Three fully self-contained versions of the site described in `artifacts/o-common.txt`. Each is a single `index.html` (no build step, no framework) sharing one copy of the hero image (`sites/hero.jpg`, the "Inhale/Exhale" performance photo by Rita Kuleva / Aniko Szucs, downsized from the 3024×4032 original to 2000px). All five tabs (About Us, Events, Network, Artworks, Submit Your Questions) are present in every version as smooth-scroll anchor sections with an active-nav indicator; the Impressum line and photo credit appear in every footer.
+A mutual aid network for immigrant artists **and artists-scholars** on O‑1 visas. The live site is a single self-contained `index.html` (no build step, no framework) served by GitHub Pages from `docs/`.
 
-Open any version by double-clicking its `index.html`. Only external dependencies are two Google Fonts per version; all animation is hand-written CSS/JS (no libraries), all respect `prefers-reduced-motion`.
+```
+docs/
+  index.html                              # the live site (formerly "Version 2 — The Red Ribbon")
+  hero.jpg                                # "Inhale/Exhale" performance photo, Rita Kuleva / Aniko Szucs
+  legacy/
+    index.html                            # archive index describing all three explorations
+    version-1-archival/index.html         # archived exploration
+    version-3-editorial-bauhaus/index.html # archived exploration
+artifacts/
+  o-common.txt                            # canonical source copy
+  Rita Exhibition.jpg                     # reference photo supplied by the client
+```
 
-The photo is a warm, dimly lit vertical stage image (skin/gold tones, bright center, dark bottom edge) — a strong subject with the artist's arms raised. All three versions use it full-bleed under/behind the header, but treat it very differently: warm & archival (V1), red-washed & loud (V2), grayscale & monumental (V3).
+`artifacts/o-common.txt` is the canonical text. All five tabs — About Us, Events, Network, Artworks, Submit Your Questions — are smooth-scroll anchor sections with an active-nav indicator. The Impressum line appears in the footer; the "Submit Your Questions" form is demo-only (it confirms via a button state change — hook up Formspree/Netlify Forms/Google Forms later). The only external dependency is two Google Fonts (Archivo, Space Grotesk); all animation is hand-written CSS/JS and respects `prefers-reduced-motion`.
+
+The hero is a warm, dimly lit vertical stage photo (skin/gold tones, bright center, dark bottom edge) with the artist's arms raised. On the live site it is treated as a crimson duotone backdrop under the headline.
 
 ---
 
-## Version 1 — `sites/version-1-archival/` — "The Archive"
+## The live site — "The Red Ribbon"
+
+**Design style:** Bold activist-poster energy on a near-black canvas: a dark crimson ribbon nav, oversized condensed uppercase type, hard edges, high contrast. Dark mode throughout — the loudest of the explorations, solidarity as visual volume.
+
+**Palette:** `--ink #141414`, `--paper #F5F2EC`, `--red #8C1A2B` (dark crimson/burgundy), `--red-bright #E25563` (accent — marquee stars, section labels, and the highlighted word in the hero headline).
+
+**Image treatment:** Full-viewport hero with the image pulled toward grayscale and multiplied with a crimson wash gradient, fading into near-black at the bottom where the giant headline sits. The photo becomes an atmospheric, protest-poster-like backdrop rather than a documentary photograph.
+
+**Typography:** Archivo (variable width/weight, extra-bold, tightly tracked, all-caps) + Space Grotesk for body. The headline mixes solid, outlined (`-webkit-text-stroke`), and crimson words for a street-poster rhythm.
+
+**Animations / fancy bits:**
+- Infinite crimson marquee ticker under the hero, its `✳` stars set in the brighter accent red.
+- Fixed ribbon nav that compresses on scroll.
+- Network section as three full-width link-rows that slide right and turn crimson on hover.
+- Artworks tiles fill solid crimson from the bottom on hover (translate-y wipe) with all text inverting to white.
+- Vertical "Scroll ↓" cue with a gentle bob animation.
+- FAQ accordion (`<details>`) inside the crimson submit section, answering "Is this legal advice?" etc.
+
+**Inspiration:** Political campaign posters, ACT UP / mutual-aid graphics, Swiss poster design crossed with punk zine energy, Brutalist web design (hard borders, offset grids, no rounded corners).
+
+---
+
+## The legacy archive — `docs/legacy/`
+
+Two earlier explorations were kept for reference when the Red Ribbon direction was selected. They share the same IA and copy, so the differences are purely design-driven.
+
+| | V1 Archival | V3 Editorial |
+|---|---|---|
+| Mood | warm, literary, zine-like | clean, institutional, refined |
+| Palette | cream/ink/rubber-stamp red | white/black/red accent |
+| Type voice | Fraunces serif + IBM Plex Mono | Space Grotesk + Inter |
+| Image treatment | warm, fades into paper | grayscale monument + Ken Burns |
+| Signature effect | animated "Fig. 1" bar chart | grayscale→color event poster |
+
+V1 is an aged-paper dossier aesthetic — the organization's material is literally paperwork, so the site reads like a beautifully typeset case file. V3 is Swiss-grid editorial: white gallery background, numbered sections, one disciplined red accent, and a cinematic 22s Ken Burns drift on the hero. Both are frozen and not maintained.
+
+---
+
+## Version 1 — `docs/legacy/version-1-archival/` — "The Archive"
 
 **Design style:** Warm archival-document aesthetic. Aged-paper cream (#F2EEE3), typewriter mono labels, hairline rules, a rubber-stamp red (#A83226), and Fraunces (an old-style serif) for everything editorial. The whole site reads like a beautifully typeset dossier or mutual-aid zine — fitting for an organization whose material is literally paperwork: petitions, letters, case files.
 
@@ -29,29 +80,7 @@ The photo is a warm, dimly lit vertical stage image (skin/gold tones, bright cen
 
 ---
 
-## Version 2 — `sites/version-2-red-ribbon/` — "The Red Ribbon"
-
-**Design style:** Bold activist-poster energy on a near-black canvas: solid red header ribbon, oversized condensed uppercase type, hard edges, high contrast, red-on-black accents. This is the loudest of the three — solidarity as visual volume. Dark mode by default, the only version that is dark-themed throughout the body.
-
-**Image treatment:** Full-viewport (100vh) hero with a duotone treatment: the image is pulled toward grayscale and multiplied with a red wash gradient, fading into near-black at the bottom where the giant headline sits. The photo becomes an atmospheric, protest-poster-like backdrop rather than a documentary photograph. Red ribbon header is fixed and shrinks on scroll.
-
-**Typography:** Archivo (variable width/weight, extra-bold, tightly tracked, all-caps) + Space Grotesk for body. Headline mixes solid, outlined (`-webkit-text-stroke`), and red words for a street-poster rhythm.
-
-**Animations / fancy bits:**
-- Infinite red marquee ticker under the hero (mutual-aid slogans).
-- Fixed red "ribbon" nav that compresses on scroll.
-- Network section as three full-width activist link-rows that slide right and turn red on hover.
-- Artworks tiles fill solid red from the bottom on hover (translate-y wipe) with all text inverting to white.
-- Vertical "Scroll ↓" cue with a gentle bob animation.
-- FAQ accordion (`<details>`) inside the red submit section, answering "Is this legal advice?" etc.
-
-**Inspiration:** Political campaign posters, ACT UP / mutual-aid graphics, Swiss poster design crossed with punk zine energy, Brutalist web design (hard borders, offset grids, no rounded corners).
-
-**Tech/dependencies:** Static HTML + CSS + vanilla JS; Google Fonts (Archivo variable, Space Grotesk).
-
----
-
-## Version 3 — `sites/version-3-editorial-bauhaus/` — "The Editorial"
+## Version 3 — `docs/legacy/version-3-editorial-bauhaus/` — "The Editorial"
 
 **Design style:** Swiss/international-typographic-style editorial: white gallery-like background, strict grid, numbered sections (01–05) with rules, giant Space Grotesk headlines with an outlined-word motif, generous whitespace, one disciplined red accent. The most refined and "institution-ready" of the three — the direction I'd pick if the audience includes funders, universities (CUNY), and press.
 
@@ -72,15 +101,11 @@ The photo is a warm, dimly lit vertical stage image (skin/gold tones, bright cen
 
 ---
 
-## How to compare
+## Adding the site to a host
 
-| | V1 Archival | V2 Red Ribbon | V3 Editorial |
-|---|---|---|---|
-| Mood | warm, literary, zine-like | loud, activist, urgent | clean, institutional, refined |
-| Palette | cream/ink/rubber-stamp red | black/red/white | white/black/red accent |
-| Type voice | serif + mono | condensed extra-bold caps | grotesque + neutral body |
-| Image treatment | warm, fades into paper | red duotone, darkened | grayscale monument + Ken Burns |
-| Dark or light | light | dark | light |
-| Signature effect | animated "Fig. 1" bar chart | marquee ticker + red-fill hover tiles | grayscale→color event poster |
+`docs/` is already the GitHub Pages publish directory, so `docs/index.html` is the live landing page. To preview locally, serve the folder rather than opening the file directly, since the hero path is relative:
 
-All three share the same IA, the same copy (drawn from `o-common.txt`), the same hero credit line, and the same footer Impressum, so differences are purely design-driven and easy to A/B. The "Submit Your Questions" forms are demo-only (they confirm with a button state change; hook up Formspree/Netlify Forms/Google Forms later). The event detail, network links, and artwork entries are all stubs pointing at the right sections, ready for real pages.
+```sh
+cd docs && python3 -m http.server 8899
+```
+
