@@ -42,13 +42,13 @@ body{background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:
 @media(max-width:900px){.ribbon nav{display:none}}
 
 /* hero */
-.hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden}
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden}
 .hero .bg-wrap{position:absolute;inset:0}
 .hero img{width:100%;height:100%;object-fit:cover;object-position:50% 10%;filter:grayscale(35%) contrast(1.05) brightness(.92)}
 .hero .redwash{position:absolute;inset:0;background:linear-gradient(180deg,rgba(140,26,43,.34),rgba(20,20,20,.15) 40%,rgba(20,20,20,.88) 100%);mix-blend-mode:multiply}
 .hero .inkfade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.35) 0%,transparent 30%,transparent 55%,rgba(20,20,20,.92) 100%)}
-.hero .content{position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto;padding:0 28px 64px}
-.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,9vw,128px);line-height:.92;text-transform:uppercase;letter-spacing:-.015em;color:#fff}
+.hero .content{position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto;padding:104px 28px 64px}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,min(9vw,15vh),128px);line-height:.92;text-transform:uppercase;letter-spacing:-.015em;color:#fff}
 .hero h1 .stroke{color:transparent;-webkit-text-stroke:2px #fff;display:inline-block}
 .hero h1 .red{color:var(--red-bright)}
 .hero .tagline{margin-top:22px;font-size:clamp(16px,2vw,21px);color:#EDEAE2;max-width:56ch}

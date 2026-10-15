@@ -1,5 +1,7 @@
 # The O Commons — Immigrant Artists Mutual Aid
 
+**Live site: <https://kyle-wendling.github.io/o-commons/>**
+
 A mutual aid network for immigrant artists **and artists-scholars** on O‑1 visas. The live site is a single self-contained `index.html` (no build step, no framework) served by GitHub Pages from `docs/`.
 
 ```
@@ -15,9 +17,35 @@ artifacts/
   Rita Exhibition.jpg                     # reference photo supplied by the client
 ```
 
-`artifacts/o-common.txt` is the canonical text. All five tabs — About Us, Events, Network, Artworks, Submit Your Questions — are smooth-scroll anchor sections with an active-nav indicator. The Impressum line appears in the footer; the "Submit Your Questions" form is demo-only (it confirms via a button state change — hook up Formspree/Netlify Forms/Google Forms later). The only external dependency is two Google Fonts (Archivo, Space Grotesk); all animation is hand-written CSS/JS and respects `prefers-reduced-motion`.
+`artifacts/o-common.txt` is the canonical text. All five tabs — About Us, Events, Network, Artworks, Submit Your Questions — are smooth-scroll anchor sections with an active-nav indicator. The Impressum line appears in the footer. The only external dependency is two Google Fonts (Archivo, Space Grotesk); all animation is hand-written CSS/JS and respects `prefers-reduced-motion`.
 
 The hero is a warm, dimly lit vertical stage photo (skin/gold tones, bright center, dark bottom edge) with the artist's arms raised. On the live site it is treated as a crimson duotone backdrop under the headline.
+
+---
+
+## Revision 2 — applied 2026-10-15
+
+The client's second round of feedback, applied to the live site. Everything below this section describes the site as it now stands; the "Legacy archive" section further down is **superseded v1 material** kept only for reference.
+
+| # | Request | What changed |
+|---|---|---|
+| 1 | Darker red, closer to crimson/burgundy | `--red` set to `#8C1A2B`; new `--red-bright #E25563` accent. Both contrast-verified against WCAG. |
+| 2 | Landing copy | "and artists-scholars" added to the tagline; "Peer knowledge…" moved to its own line; hero photo credit deleted. |
+| 3 | Marquee stars + words | `✳` stars recolored to the accent red (brighter than the background red); "Artist-Scholars" and "Scholars" added to both track halves. |
+| 4 | About Us | Two columns collapsed to one; three paragraphs — the original long opening paragraph, the "Immigration attorneys…" paragraph, and the "The O Commons fills this gap…" pull-quote. |
+| 5 | Events | "Join in person" and "Join online" buttons added, linking to the two Eventbrite URLs for the October 23 launch event. |
+| 6 | Network | "and scholars" added; the self-petition note appended; Curatorial Repository description replaced. |
+| 7 | Artworks | "04 Paper as Material" replaced by "04 — Archive of Artworks"; reduced to three cards (Archive of Artworks, Immigration Memorabilia, Open Call). |
+| 8 | Submit Your Questions | Section index shrunk so "05 — Ask anything" shares the heading line; form rebuilt as an aligned label/input grid with matching underlines. |
+
+Two adjustments beyond the literal list, both needed to make the requests read correctly:
+
+- The Artworks cards were bottom-aligned, which left the three tags at different heights once the third card gained a subtitle. They are now top-aligned.
+- The first two Artworks cards duplicated their title as a small label above the heading. Those labels became `01`/`02`/`03` to match the section's numbering.
+
+**Also in this round:** the three-version chooser and the two unselected explorations moved to `docs/legacy/`, and the Red Ribbon version was promoted to `docs/index.html` so it became the live landing page.
+
+**Hero sizing fix (2026-10-15):** the headline was bottom-anchored inside a fixed `height:100vh` hero, so on short viewports — typically wide monitors — the top line slid under the fixed ribbon. The hero is now `min-height:100vh` with top padding, and the headline scales on `min(9vw,15vh)`. Verified clear of the ribbon from 1280×720 through 3440×700.
 
 ---
 
@@ -43,7 +71,9 @@ The hero is a warm, dimly lit vertical stage photo (skin/gold tones, bright cent
 
 ---
 
-## The legacy archive — `docs/legacy/`
+## The legacy archive — `docs/legacy/` (superseded v1 material)
+
+> **Note:** everything from here down describes the **v1 exploration round** and is kept for reference only. It is not the live site and is not maintained. The live site is described above.
 
 Two earlier explorations were kept for reference when the Red Ribbon direction was selected. They share the same IA and copy, so the differences are purely design-driven.
 
