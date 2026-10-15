@@ -337,13 +337,43 @@ footer{padding:64px 28px 36px;max-width:1240px;margin:0 auto}
         </details>
       </div>
     </div>
-    <form class="sub-form" onsubmit="event.preventDefault();this.querySelector('button').textContent='Received — thank you.';this.querySelector('button').disabled=true;">
+    <!--
+      Submissions are delivered by Google Forms. Nothing is stored on this
+      site, and no server is involved.
+
+      To connect it, replace the five placeholders below:
+
+        1. Create a Google Form with four questions, in this order:
+             Name or Alias  — short answer
+             Email          — short answer
+             Topic          — dropdown (or multiple choice)
+             Your Question  — paragraph
+           The Topic options must match the <option> text below exactly,
+           including the non-breaking hyphen in "O‑1".
+
+        2. Click Send, choose the link icon, and copy the URL. The form ID
+           is the long string between /d/e/ and /viewform. Paste it over
+           YOUR_FORM_ID in the action attribute.
+
+        3. Open the three-dot menu and choose "Get pre-filled link". Type a
+           placeholder into every field, click "Get link", and copy it. The
+           URL contains one entry.NNNNNNNNN= per field, in the same order as
+           the questions. Paste each number over the matching
+           YOUR_*_ENTRY_ID in the name attributes below.
+
+      Until the placeholders are replaced the form confirms locally without
+      sending anything, so the page stays usable while it is being set up.
+    -->
+    <form class="sub-form"
+          action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse"
+          method="POST"
+          target="gform-target">
       <label for="v2-name">Name or Alias:</label>
-      <input id="v2-name" type="text" autocomplete="name">
+      <input id="v2-name" name="entry.YOUR_NAME_ENTRY_ID" type="text" autocomplete="name">
       <label for="v2-email">Email:</label>
-      <input id="v2-email" type="email" autocomplete="email">
+      <input id="v2-email" name="entry.YOUR_EMAIL_ENTRY_ID" type="email" autocomplete="email">
       <label for="v2-topic">Topic:</label>
-      <select id="v2-topic">
+      <select id="v2-topic" name="entry.YOUR_TOPIC_ENTRY_ID">
         <option>O‑1 petitions &amp; renewals</option>
         <option>EB / green card path</option>
         <option>Finding sponsors &amp; institutions</option>
@@ -352,10 +382,11 @@ footer{padding:64px 28px 36px;max-width:1240px;margin:0 auto}
         <option>Something else</option>
       </select>
       <label for="v2-body">Your Question:</label>
-      <textarea id="v2-body" placeholder="Type it here — no wrong questions."></textarea>
+      <textarea id="v2-body" name="entry.YOUR_QUESTION_ENTRY_ID" placeholder="Type it here — no wrong questions."></textarea>
       <button type="submit">Send question</button>
     </form>
   </div>
+  <iframe name="gform-target" title="Question submission" style="display:none"></iframe>
 </section>
 
 <footer>
@@ -377,6 +408,26 @@ addEventListener('scroll',()=>ribbon.classList.toggle('min',scrollY>80),{passive
 // reveal on scroll
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// question form — posts to Google Forms via the hidden iframe
+const form=document.querySelector('.sub-form');
+const frame=document.querySelector('iframe[name="gform-target"]');
+const configured=!/YOUR_FORM_ID|YOUR_[A-Z]+_ENTRY_ID/.test(form.action+form.innerHTML);
+let sent=false;
+
+function confirmSent(){
+  const btn=form.querySelector('button');
+  btn.textContent='Received — thank you.';
+  btn.disabled=true;
+  form.querySelectorAll('input,select,textarea').forEach(f=>f.disabled=true);
+}
+
+form.addEventListener('submit',e=>{
+  if(!configured){e.preventDefault();confirmSent();return}
+  sent=true;
+});
+
+frame.addEventListener('load',()=>{if(sent)confirmSent()});
 </script>
 </body>
 </html>

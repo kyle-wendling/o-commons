@@ -19,6 +19,8 @@ artifacts/
 
 `artifacts/o-common.txt` is the canonical text. All five tabs — About Us, Events, Network, Artworks, Submit Your Questions — are smooth-scroll anchor sections with an active-nav indicator. The Impressum line appears in the footer. The only external dependency is two Google Fonts (Archivo, Space Grotesk); all animation is hand-written CSS/JS and respects `prefers-reduced-motion`.
 
+The question form posts to **Google Forms** through a hidden iframe, so submissions land in a Google Sheet with no server and no third-party account beyond the Google one that owns the form. It ships with placeholders — see [Connecting the question form](#connecting-the-question-form) below. Until they are filled in, the form confirms locally without sending anything.
+
 The hero is a warm, dimly lit vertical stage photo (skin/gold tones, bright center, dark bottom edge) with the artist's arms raised. On the live site it is treated as a crimson duotone backdrop under the headline.
 
 ---
@@ -128,6 +130,37 @@ V1 is an aged-paper dossier aesthetic — the organization's material is literal
 **Inspiration:** Swiss/Bauhaus grid design, Kinfolk/Apartment-style editorial layouts, museum biennial websites, Jose Müller-Brockmann posters; the grayscale monumentalism of documentary photo essays.
 
 **Tech/dependencies:** Static HTML + CSS + vanilla JS; Google Fonts (Space Grotesk, Inter).
+
+---
+
+## Connecting the question form
+
+The "Submit Your Questions" form is wired to Google Forms. Nothing is stored on the site and no server is involved — the browser POSTs the four fields straight to Google's `formResponse` endpoint, targeting a hidden iframe so the visitor never leaves the page.
+
+**It ships with placeholders and will not send anything until they are replaced.** While they are present the form confirms locally ("Received — thank you.") so the page stays usable.
+
+To connect it:
+
+1. **Create the form.** Four questions, in this order:
+
+   | Question | Type |
+   |---|---|
+   | Name or Alias | Short answer |
+   | Email | Short answer |
+   | Topic | Dropdown (or multiple choice) |
+   | Your Question | Paragraph |
+
+   The Topic options must match the `<option>` text in `docs/index.html` exactly, including the non-breaking hyphen in `O‑1`.
+
+2. **Get the form ID.** Click *Send* → link icon → copy the URL. The ID is the long string between `/d/e/` and `/viewform`. Paste it over `YOUR_FORM_ID` in the form's `action` attribute.
+
+3. **Get the entry IDs.** Open the three-dot menu → *Get pre-filled link*. Type a placeholder into every field, click *Get link*, and copy the result. The URL contains one `entry.NNNNNNNNN=` per field, in the same order as the questions. Paste each number over the matching `YOUR_*_ENTRY_ID` in the `name` attributes.
+
+The four placeholders are `YOUR_FORM_ID`, `YOUR_NAME_ENTRY_ID`, `YOUR_EMAIL_ENTRY_ID`, `YOUR_TOPIC_ENTRY_ID`, and `YOUR_QUESTION_ENTRY_ID`. The script detects whether they are still present and switches behaviour accordingly, so there is no second step to remember.
+
+**Where submissions go:** the form's *Responses* tab, and — if you click *Link to Sheets* — a Google Sheet you own. Both are private to the form's owner.
+
+**Caveats:** Google Forms does not send a CORS header, which is why the POST targets a hidden iframe rather than using `fetch`. That means the page cannot read Google's reply, so the confirmation is optimistic — it assumes success. If a submission fails, the visitor still sees "Received — thank you." and the entry is lost. For a low-volume mutual-aid intake form that trade-off is usually fine; if it ever matters, a service like Formspree returns a real response and can report failures honestly.
 
 ---
 
