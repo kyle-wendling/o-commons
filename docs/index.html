@@ -343,12 +343,13 @@ footer{padding:64px 28px 36px;max-width:1240px;margin:0 auto}
       <input id="v2-email" name="entry.1864699487" type="email" autocomplete="email">
       <label for="v2-topic">Topic:</label>
       <select id="v2-topic" name="entry.711785700">
-        <option>O-1 petitions &amp; renewals</option>
-        <option>EB / green card path</option>
-        <option>Finding sponsors &amp; institutions</option>
-        <option>Attorneys &amp; costs</option>
-        <option>RFEs &amp; timelines</option>
-        <option>Something else</option>
+        <!-- Google Form stores these option strings with a literal &amp; entity -->
+        <option value="O-1 petitions &amp;amp; renewals">O-1 petitions &amp; renewals</option>
+        <option value="EB / green card path">EB / green card path</option>
+        <option value="Finding sponsors &amp;amp; institutions">Finding sponsors &amp; institutions</option>
+        <option value="Attorneys &amp;amp; costs">Attorneys &amp; costs</option>
+        <option value="RFEs &amp;amp; timelines">RFEs &amp; timelines</option>
+        <option value="Something else">Something else</option>
       </select>
       <label for="v2-body">Your Question:</label>
       <textarea id="v2-body" name="entry.1169155781" placeholder="Type it here — no wrong questions."></textarea>
